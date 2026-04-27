@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Heart, Search, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
+import { useWishlistCount } from "@/hooks/use-wishlist";
 
 const links = [
   { to: "/", label: "Beranda" },
@@ -17,6 +18,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const wishlistCount = useWishlistCount();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -75,13 +77,19 @@ export function Navbar() {
             <Search size={18} />
           </button>
           <Link
-            to="/collections"
-            aria-label="Wishlist"
-            className={`hidden h-10 w-10 place-items-center rounded-full transition-colors sm:grid ${
+            to="/wishlist"
+            aria-label={`Wishlist${wishlistCount > 0 ? ` (${wishlistCount})` : ""}`}
+            className={`relative hidden h-10 w-10 place-items-center rounded-full transition-colors sm:grid ${
               scrolled ? "text-espresso hover:bg-[var(--muted)]" : "text-bone hover:bg-white/10"
             }`}
+            activeProps={{ className: "!text-[var(--gold)]" }}
           >
-            <Heart size={18} />
+            <Heart size={18} fill={wishlistCount > 0 ? "currentColor" : "none"} />
+            {wishlistCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-[16px] place-items-center rounded-full bg-[var(--cognac)] px-1 text-[9px] font-semibold text-bone shadow-soft">
+                {wishlistCount > 9 ? "9+" : wishlistCount}
+              </span>
+            )}
           </Link>
           <button
             type="button"
@@ -136,6 +144,22 @@ export function Navbar() {
                   {l.label}
                 </Link>
               ))}
+              <Link
+                to="/wishlist"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-[var(--muted)]"
+                activeProps={{ className: "!text-[var(--gold)]" }}
+              >
+                <span className="inline-flex items-center gap-2">
+                  <Heart size={14} fill={wishlistCount > 0 ? "currentColor" : "none"} />
+                  Wishlist
+                </span>
+                {wishlistCount > 0 && (
+                  <span className="rounded-full bg-[var(--cognac)] px-2 py-0.5 text-[10px] font-semibold text-bone">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
             </nav>
           </div>
         </div>

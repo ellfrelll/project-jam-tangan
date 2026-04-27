@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Heart, Share2 } from "lucide-react";
 import { getWatch, watches } from "@/data/watches";
 import { RatingStars } from "@/components/RatingStars";
 import { WatchCard } from "@/components/WatchCard";
+import { useWishlist } from "@/hooks/use-wishlist";
 
 export const Route = createFileRoute("/watch/$id")({
   loader: ({ params }) => {
@@ -42,7 +43,8 @@ export const Route = createFileRoute("/watch/$id")({
 
 function WatchDetail() {
   const { watch } = Route.useLoaderData();
-  const [saved, setSaved] = useState(false);
+  const { has, toggle } = useWishlist();
+  const saved = has(watch.id);
   const [shareNote, setShareNote] = useState<string | null>(null);
 
   const related = watches.filter((w) => w.id !== watch.id && w.brand === watch.brand).slice(0, 3);
@@ -123,15 +125,16 @@ function WatchDetail() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={() => setSaved((s) => !s)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] transition-colors ${
+                  onClick={() => toggle(watch.id)}
+                  aria-pressed={saved}
+                  className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] transition-all hover:scale-[1.02] active:scale-95 ${
                     saved
-                      ? "border-[var(--cognac)] bg-[var(--cognac)] text-bone"
+                      ? "border-[var(--cognac)] bg-[var(--cognac)] text-bone shadow-soft"
                       : "border-[var(--cocoa)]/40 bg-transparent text-foreground hover:border-[var(--cognac)] hover:text-[var(--cognac)]"
                   }`}
                 >
                   <Heart size={14} fill={saved ? "currentColor" : "none"} />
-                  {saved ? "Tersimpan" : "Simpan ke Wishlist"}
+                  {saved ? "Tersimpan di Wishlist" : "Simpan ke Wishlist"}
                 </button>
                 <button
                   type="button"

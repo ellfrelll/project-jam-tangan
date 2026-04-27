@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as BrandsRouteImport } from './routes/brands'
@@ -16,6 +17,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WatchIdRouteImport } from './routes/watch.$id'
 
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/brands': typeof BrandsRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/wishlist': typeof WishlistRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/brands': typeof BrandsRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/wishlist': typeof WishlistRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/brands': typeof BrandsRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/wishlist': typeof WishlistRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +89,17 @@ export interface FileRouteTypes {
     | '/brands'
     | '/collections'
     | '/contact'
+    | '/wishlist'
     | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/brands' | '/collections' | '/contact' | '/watch/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/collections'
+    | '/contact'
+    | '/wishlist'
+    | '/watch/$id'
   id:
     | '__root__'
     | '/'
@@ -90,6 +107,7 @@ export interface FileRouteTypes {
     | '/brands'
     | '/collections'
     | '/contact'
+    | '/wishlist'
     | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
@@ -99,11 +117,19 @@ export interface RootRouteChildren {
   BrandsRoute: typeof BrandsRoute
   CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
+  WishlistRoute: typeof WishlistRoute
   WatchIdRoute: typeof WatchIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -155,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrandsRoute: BrandsRoute,
   CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
+  WishlistRoute: WishlistRoute,
   WatchIdRoute: WatchIdRoute,
 }
 export const routeTree = rootRouteImport
