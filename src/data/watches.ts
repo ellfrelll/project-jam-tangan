@@ -6,8 +6,8 @@ import patekMoon from "@/assets/watch-patek-moon.jpg";
 import ap from "@/assets/watch-ap.jpg";
 import tag from "@/assets/watch-tag.jpg";
 
-export type Collection = "Classic" | "Sport" | "Modern";
-export type Label = "Best Pick" | "Popular" | "Recommended" | "Editor's Choice";
+export type Collection = "Klasik" | "Sport" | "Modern";
+export type Label = "Pilihan Terbaik" | "Populer" | "Direkomendasikan" | "Pilihan Editor";
 
 export interface Watch {
   id: string;
@@ -27,32 +27,37 @@ export const brands = [
   {
     slug: "rolex",
     name: "Rolex",
-    blurb: "The undisputed icon of timekeeping. Crowned heritage in every link.",
-    accent: "Geneva, Switzerland · est. 1905",
+    blurb: "Ikon tak terbantahkan dunia horologi. Warisan agung dalam setiap mata rantainya.",
+    accent: "Geneva, Swiss · est. 1905",
+    monogram: "R",
   },
   {
     slug: "omega",
     name: "Omega",
-    blurb: "Worn on the moon, refined on land. Pioneers of the modern sport watch.",
-    accent: "Bienne, Switzerland · est. 1848",
+    blurb: "Dipakai di Bulan, disempurnakan di darat. Pelopor jam tangan sport modern.",
+    accent: "Bienne, Swiss · est. 1848",
+    monogram: "Ω",
   },
   {
     slug: "patek-philippe",
     name: "Patek Philippe",
-    blurb: "You never actually own one — you merely look after it for the next generation.",
-    accent: "Geneva, Switzerland · est. 1839",
+    blurb: "Anda tidak benar-benar memilikinya — Anda hanya merawatnya untuk generasi berikutnya.",
+    accent: "Geneva, Swiss · est. 1839",
+    monogram: "P",
   },
   {
     slug: "audemars-piguet",
     name: "Audemars Piguet",
-    blurb: "The octagonal silhouette that rewrote the rules of luxury sport.",
-    accent: "Le Brassus, Switzerland · est. 1875",
+    blurb: "Siluet oktagonal yang menulis ulang aturan jam tangan sport mewah.",
+    accent: "Le Brassus, Swiss · est. 1875",
+    monogram: "AP",
   },
   {
     slug: "tag-heuer",
     name: "TAG Heuer",
-    blurb: "Born on the racetrack, engineered for the avant-garde.",
-    accent: "La Chaux-de-Fonds, Switzerland · est. 1860",
+    blurb: "Lahir di sirkuit balap, dirancang untuk jiwa avant-garde.",
+    accent: "La Chaux-de-Fonds, Swiss · est. 1860",
+    monogram: "TH",
   },
 ];
 
@@ -64,16 +69,16 @@ export const watches: Watch[] = [
     image: rolex,
     rating: 5,
     score: 4.9,
-    label: "Best Pick",
-    collection: "Classic",
-    tagline: "The President. Quietly commanding.",
+    label: "Pilihan Terbaik",
+    collection: "Klasik",
+    tagline: "Sang Presiden. Berwibawa dalam diam.",
     description:
-      "A study in restrained opulence. The Day-Date 40 carries the weight of half a century of statesmanship on a fluted 18 ct gold bezel, while a champagne dial diffuses warm light across applied indices. Every detail — from the President bracelet to the meticulously finished 3255 caliber — is engineered to disappear into ritual.",
+      "Sebuah studi tentang kemewahan yang terkendali. Day-Date 40 mengemban beban setengah abad kewibawaan pada bezel emas 18 karat berukir flute, sementara dial sampanye memantulkan cahaya hangat ke seluruh indeks aplikatif. Setiap detail — dari bracelet President hingga kaliber 3255 yang dirakit dengan sangat teliti — direkayasa untuk menyatu dalam ritual harian.",
     specs: [
-      { label: "Case", value: "40 mm · 18 ct yellow gold" },
-      { label: "Movement", value: "Caliber 3255, automatic" },
-      { label: "Power Reserve", value: "70 hours" },
-      { label: "Dial", value: "Champagne, applied indices" },
+      { label: "Casing", value: "40 mm · emas kuning 18 ct" },
+      { label: "Movement", value: "Kaliber 3255, otomatis" },
+      { label: "Cadangan Daya", value: "70 jam" },
+      { label: "Dial", value: "Sampanye, indeks aplikatif" },
     ],
   },
   {
@@ -83,16 +88,16 @@ export const watches: Watch[] = [
     image: rolexSub,
     rating: 5,
     score: 4.8,
-    label: "Popular",
+    label: "Populer",
     collection: "Sport",
-    tagline: "Built for the deep. Loved on land.",
+    tagline: "Dibangun untuk kedalaman. Dicintai di daratan.",
     description:
-      "The reference that taught the world what a tool watch could be. A unidirectional bezel, sapphire crystal, and 300 m of water resistance, wrapped in proportions refined over six decades. Equally at home below the waves and beneath a crisp shirt cuff.",
+      "Referensi yang mengajarkan dunia tentang arti sebuah tool watch sejati. Bezel satu arah, kristal sapphire, dan ketahanan air hingga 300 m, dibalut proporsi yang disempurnakan selama enam dekade. Sama anggunnya di bawah ombak maupun di balik manset kemeja yang rapi.",
     specs: [
-      { label: "Case", value: "41 mm · Oystersteel" },
-      { label: "Movement", value: "Caliber 3235, automatic" },
-      { label: "Water Resistance", value: "300 m" },
-      { label: "Bezel", value: "Cerachrom 60-min graduated" },
+      { label: "Casing", value: "41 mm · Oystersteel" },
+      { label: "Movement", value: "Kaliber 3235, otomatis" },
+      { label: "Tahan Air", value: "300 m" },
+      { label: "Bezel", value: "Cerachrom skala 60 menit" },
     ],
   },
   {
@@ -102,16 +107,16 @@ export const watches: Watch[] = [
     image: omega,
     rating: 5,
     score: 4.7,
-    label: "Recommended",
+    label: "Direkomendasikan",
     collection: "Sport",
-    tagline: "The diver, evolved.",
+    tagline: "Sang penyelam, telah berevolusi.",
     description:
-      "A laser-engraved wave dial under domed sapphire, flanked by a ceramic blue bezel — the Seamaster blends marine-grade engineering with cinematic charisma. Powered by the Co-Axial Master Chronometer 8800, it shrugs off magnetism, pressure and time itself.",
+      "Dial bermotif gelombang yang diukir laser di balik sapphire kubah, didampingi bezel keramik biru — Seamaster memadukan rekayasa kelas marine dengan karisma sinematik. Ditenagai Co-Axial Master Chronometer 8800 yang tahan medan magnet, tekanan, dan waktu itu sendiri.",
     specs: [
-      { label: "Case", value: "42 mm · stainless steel" },
+      { label: "Casing", value: "42 mm · stainless steel" },
       { label: "Movement", value: "Co-Axial 8800 Master Chronometer" },
-      { label: "Water Resistance", value: "300 m" },
-      { label: "Certification", value: "METAS-certified" },
+      { label: "Tahan Air", value: "300 m" },
+      { label: "Sertifikasi", value: "Tersertifikasi METAS" },
     ],
   },
   {
@@ -121,16 +126,16 @@ export const watches: Watch[] = [
     image: patek,
     rating: 5,
     score: 4.95,
-    label: "Editor's Choice",
-    collection: "Classic",
-    tagline: "Discretion as the highest art.",
+    label: "Pilihan Editor",
+    collection: "Klasik",
+    tagline: "Kesederhanaan sebagai seni tertinggi.",
     description:
-      "Born in 1932 from the Bauhaus principle that form follows function, the Calatrava remains the dress watch by which all others are measured. The 6119R revives the hobnail bezel in 39 mm rose gold, framing a silvered opaline dial of monastic purity.",
+      "Lahir tahun 1932 dari prinsip Bauhaus bahwa bentuk mengikuti fungsi, Calatrava tetap menjadi tolok ukur dress watch hingga hari ini. Referensi 6119R menghidupkan kembali bezel hobnail dalam emas mawar 39 mm, membingkai dial opaline keperakan dengan kemurnian yang nyaris monastik.",
     specs: [
-      { label: "Case", value: "39 mm · 18 ct rose gold" },
-      { label: "Movement", value: "Caliber 30-255 PS, manual wind" },
-      { label: "Power Reserve", value: "65 hours" },
-      { label: "Strap", value: "Hand-stitched alligator" },
+      { label: "Casing", value: "39 mm · emas mawar 18 ct" },
+      { label: "Movement", value: "Kaliber 30-255 PS, manual wind" },
+      { label: "Cadangan Daya", value: "65 jam" },
+      { label: "Tali", value: "Aligator jahit tangan" },
     ],
   },
   {
@@ -140,15 +145,15 @@ export const watches: Watch[] = [
     image: patekMoon,
     rating: 5,
     score: 4.9,
-    label: "Editor's Choice",
-    collection: "Classic",
-    tagline: "Poetry written in mechanics.",
+    label: "Pilihan Editor",
+    collection: "Klasik",
+    tagline: "Puisi yang tertulis dalam mekanika.",
     description:
-      "An astronomic complication so precise it deviates by a single day every 122 years. Beneath an ivory-lacquered dial, a hand-finished caliber traces the lunar cycle with sapphire-blue artistry — quiet horology at its most lyrical.",
+      "Sebuah komplikasi astronomis yang begitu presisi sehingga hanya menyimpang satu hari setiap 122 tahun. Di bawah dial berlapis ivory, kaliber yang difinishing dengan tangan menelusuri siklus bulan dengan sentuhan biru sapphire — horologi paling liris dalam keheningannya.",
     specs: [
-      { label: "Case", value: "39 mm · 18 ct rose gold" },
-      { label: "Complication", value: "Moonphase, date" },
-      { label: "Movement", value: "Caliber 215 PS LU" },
+      { label: "Casing", value: "39 mm · emas mawar 18 ct" },
+      { label: "Komplikasi", value: "Moonphase, tanggal" },
+      { label: "Movement", value: "Kaliber 215 PS LU" },
       { label: "Finishing", value: "Geneva Seal" },
     ],
   },
@@ -159,16 +164,16 @@ export const watches: Watch[] = [
     image: ap,
     rating: 5,
     score: 4.85,
-    label: "Popular",
+    label: "Populer",
     collection: "Modern",
-    tagline: "The watch that broke the rules.",
+    tagline: "Jam tangan yang mendobrak segala aturan.",
     description:
-      "Gérald Genta's 1972 manifesto — an integrated steel sports watch with the audacity of haute joaillerie. The Grande Tapisserie dial radiates beneath an octagonal bezel held by eight hexagonal screws, every facet alternating between brushed and polished surfaces.",
+      "Manifesto Gérald Genta tahun 1972 — sebuah jam tangan sport baja terintegrasi dengan keberanian haute joaillerie. Dial Grande Tapisserie memancarkan cahaya di balik bezel oktagonal yang ditahan delapan baut heksagonal, setiap sisinya berganti antara permukaan brushed dan polished.",
     specs: [
-      { label: "Case", value: "41 mm · stainless steel" },
-      { label: "Movement", value: "Caliber 4302, automatic" },
-      { label: "Power Reserve", value: "70 hours" },
-      { label: "Dial", value: "Blue 'Grande Tapisserie'" },
+      { label: "Casing", value: "41 mm · stainless steel" },
+      { label: "Movement", value: "Kaliber 4302, otomatis" },
+      { label: "Cadangan Daya", value: "70 jam" },
+      { label: "Dial", value: "Biru 'Grande Tapisserie'" },
     ],
   },
   {
@@ -178,16 +183,16 @@ export const watches: Watch[] = [
     image: tag,
     rating: 4,
     score: 4.6,
-    label: "Recommended",
+    label: "Direkomendasikan",
     collection: "Modern",
-    tagline: "Speed, distilled.",
+    tagline: "Esensi kecepatan, disuling sempurna.",
     description:
-      "Conceived in 1963 for the world's most dangerous race, the Carrera distills motorsport into a wearable instrument. Tri-compax sub-dials sit under domed sapphire, flanked by red-tipped chronograph seconds — kinetic, legible, alive.",
+      "Diciptakan tahun 1963 untuk balapan paling berbahaya di dunia, Carrera menyaring esensi motorsport menjadi instrumen yang dapat dikenakan. Tiga sub-dial tersusun di bawah sapphire kubah, didampingi jarum chronograph berujung merah — kinetik, mudah dibaca, dan terasa hidup.",
     specs: [
-      { label: "Case", value: "42 mm · steel" },
-      { label: "Movement", value: "Heuer 02, automatic chrono" },
-      { label: "Power Reserve", value: "80 hours" },
-      { label: "Strap", value: "Perforated calfskin" },
+      { label: "Casing", value: "42 mm · baja" },
+      { label: "Movement", value: "Heuer 02, chrono otomatis" },
+      { label: "Cadangan Daya", value: "80 jam" },
+      { label: "Tali", value: "Kulit anak sapi berlubang" },
     ],
   },
 ];
