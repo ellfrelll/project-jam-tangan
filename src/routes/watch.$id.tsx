@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Heart, Share2 } from "lucide-react";
 import { getWatch, watches } from "@/data/watches";
 import { RatingStars } from "@/components/RatingStars";
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/watch/$id")({
   },
   head: ({ loaderData }) => {
     const w = loaderData?.watch;
-    if (!w) return { meta: [{ title: "Watch — Tempus Aurum" }] };
+    if (!w) return { meta: [{ title: "Jam Tangan — Tempus Aurum" }] };
     return {
       meta: [
         { title: `${w.brand} ${w.name} — Tempus Aurum` },
@@ -28,10 +29,10 @@ export const Route = createFileRoute("/watch/$id")({
   notFoundComponent: () => (
     <div className="flex min-h-screen items-center justify-center px-4 pt-24">
       <div className="text-center">
-        <h1 className="font-display text-5xl">Reference unknown</h1>
-        <p className="mt-3 text-muted-foreground">This piece is not in our atlas.</p>
-        <Link to="/collections" className="mt-8 inline-flex rounded-full bg-espresso px-6 py-3 text-xs uppercase tracking-[0.24em] text-bone hover:bg-cocoa">
-          Back to atlas
+        <h1 className="font-display text-5xl">Referensi tidak dikenal</h1>
+        <p className="mt-3 text-muted-foreground">Jam ini tidak ada di atlas kami.</p>
+        <Link to="/collections" search={{ brand: "Semua", collection: "Semua" }} className="mt-8 inline-flex rounded-full bg-espresso px-6 py-3 text-xs uppercase tracking-[0.24em] text-bone hover:bg-cocoa">
+          Kembali ke Atlas
         </Link>
       </div>
     </div>
@@ -41,9 +42,30 @@ export const Route = createFileRoute("/watch/$id")({
 
 function WatchDetail() {
   const { watch } = Route.useLoaderData();
+  const [saved, setSaved] = useState(false);
+  const [shareNote, setShareNote] = useState<string | null>(null);
+
   const related = watches.filter((w) => w.id !== watch.id && w.brand === watch.brand).slice(0, 3);
   const others = watches.filter((w) => w.id !== watch.id).slice(0, 3);
   const recommendations = related.length >= 2 ? related : others;
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    const data = { title: `${watch.brand} ${watch.name}`, text: watch.tagline, url };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(data);
+        return;
+      }
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(url);
+        setShareNote("Tautan disalin ke clipboard");
+        setTimeout(() => setShareNote(null), 3000);
+      }
+    } catch {
+      /* user cancelled */
+    }
+  };
 
   return (
     <>
@@ -52,13 +74,14 @@ function WatchDetail() {
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <Link
             to="/collections"
+            search={{ brand: "Semua", collection: "Semua" }}
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground hover:text-foreground"
           >
-            <ArrowLeft size={14} /> Back to atlas
+            <ArrowLeft size={14} /> Kembali ke Atlas
           </Link>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div className="relative">
+            <div className="relative animate-fade-in">
               <div className="absolute -inset-8 rounded-[2.5rem] bg-gradient-to-br from-[var(--gold-soft)]/30 to-transparent blur-3xl" />
               <div className="relative overflow-hidden rounded-[2rem] shadow-luxe">
                 <img
@@ -74,7 +97,7 @@ function WatchDetail() {
               </div>
             </div>
 
-            <div>
+            <div className="animate-fade-in" style={{ animationDelay: "120ms", animationFillMode: "backwards" }}>
               <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">
                 {watch.brand} · {watch.collection}
               </span>
@@ -89,7 +112,7 @@ function WatchDetail() {
                   {watch.score.toFixed(2)}<span className="text-base text-muted-foreground">/5</span>
                 </div>
                 <span className="ml-auto text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-                  Editorial score
+                  Skor editorial
                 </span>
               </div>
 
@@ -98,12 +121,28 @@ function WatchDetail() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full border border-[var(--cocoa)]/40 bg-transparent px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-foreground transition-colors hover:border-[var(--cognac)] hover:text-[var(--cognac)]">
-                  <Heart size={14} /> Save to wishlist
+                <button
+                  type="button"
+                  onClick={() => setSaved((s) => !s)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] transition-colors ${
+                    saved
+                      ? "border-[var(--cognac)] bg-[var(--cognac)] text-bone"
+                      : "border-[var(--cocoa)]/40 bg-transparent text-foreground hover:border-[var(--cognac)] hover:text-[var(--cognac)]"
+                  }`}
+                >
+                  <Heart size={14} fill={saved ? "currentColor" : "none"} />
+                  {saved ? "Tersimpan" : "Simpan ke Wishlist"}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-[var(--cocoa)]/40 bg-transparent px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-foreground transition-colors hover:border-[var(--cognac)] hover:text-[var(--cognac)]">
-                  <Share2 size={14} /> Share
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--cocoa)]/40 bg-transparent px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-foreground transition-colors hover:border-[var(--cognac)] hover:text-[var(--cognac)]"
+                >
+                  <Share2 size={14} /> Bagikan
                 </button>
+                {shareNote && (
+                  <span className="self-center text-xs text-[var(--cognac)]">{shareNote}</span>
+                )}
               </div>
             </div>
           </div>
@@ -114,9 +153,9 @@ function WatchDetail() {
       <section className="bg-background py-24">
         <div className="mx-auto max-w-5xl px-4 md:px-8">
           <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">
-            The Reference
+            Referensi
           </span>
-          <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">Technical sheet</h2>
+          <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">Spesifikasi Teknis</h2>
 
           <dl className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2">
             {watch.specs.map((s) => (
@@ -137,17 +176,18 @@ function WatchDetail() {
           <div className="flex items-end justify-between">
             <div>
               <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">
-                Continue browsing
+                Lanjutkan menjelajah
               </span>
               <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">
-                You might also appreciate
+                Anda mungkin juga menyukai
               </h2>
             </div>
             <Link
               to="/collections"
+              search={{ brand: "Semua", collection: "Semua" }}
               className="hidden items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-foreground hover:text-[var(--cognac)] md:inline-flex"
             >
-              View atlas <ArrowRight size={14} />
+              Lihat atlas <ArrowRight size={14} />
             </Link>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

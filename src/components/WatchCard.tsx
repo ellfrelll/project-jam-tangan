@@ -3,10 +3,10 @@ import type { Watch } from "@/data/watches";
 import { RatingStars } from "./RatingStars";
 
 const labelTone: Record<string, string> = {
-  "Best Pick": "bg-[var(--gold)]/95 text-espresso",
-  "Popular": "bg-espresso text-bone",
-  "Recommended": "bg-cream text-espresso border border-[var(--cocoa)]/30",
-  "Editor's Choice": "bg-cocoa text-bone",
+  "Pilihan Terbaik": "bg-[var(--gold)]/95 text-espresso",
+  "Populer": "bg-espresso text-bone",
+  "Direkomendasikan": "bg-cream text-espresso border border-[var(--cocoa)]/30",
+  "Pilihan Editor": "bg-cocoa text-bone",
 };
 
 export function WatchCard({ watch, index = 0 }: { watch: Watch; index?: number }) {
@@ -14,8 +14,8 @@ export function WatchCard({ watch, index = 0 }: { watch: Watch; index?: number }
     <Link
       to="/watch/$id"
       params={{ id: watch.id }}
-      className="group relative block overflow-hidden rounded-2xl bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:shadow-luxe"
-      style={{ animationDelay: `${index * 60}ms` }}
+      className="group relative block animate-fade-in overflow-hidden rounded-2xl bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:shadow-luxe"
+      style={{ animationDelay: `${index * 60}ms`, animationFillMode: "backwards" }}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-cream">
         <img
@@ -26,7 +26,6 @@ export function WatchCard({ watch, index = 0 }: { watch: Watch; index?: number }
           height={1024}
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
         />
-        {/* gradient overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
         <span
@@ -37,7 +36,7 @@ export function WatchCard({ watch, index = 0 }: { watch: Watch; index?: number }
 
         <div className="absolute inset-x-0 bottom-0 translate-y-4 px-5 pb-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="inline-flex items-center gap-2 rounded-full bg-bone/90 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-espresso">
-            View Details →
+            Lihat Detail →
           </span>
         </div>
       </div>

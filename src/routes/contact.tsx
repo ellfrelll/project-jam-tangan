@@ -5,10 +5,10 @@ import { Mail, MapPin, Send } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Tempus Aurum" },
-      { name: "description", content: "Speak with the editorial desk. Tell us about your collection, or suggest a reference for the atlas." },
-      { property: "og:title", content: "Contact the Editorial Desk — Tempus Aurum" },
-      { property: "og:description", content: "Tell us about your collection, or nominate a reference for the atlas." },
+      { title: "Kontak — Tempus Aurum" },
+      { name: "description", content: "Hubungi meja editorial kami. Bagikan tentang koleksi Anda atau usulkan referensi untuk atlas." },
+      { property: "og:title", content: "Hubungi Meja Editorial — Tempus Aurum" },
+      { property: "og:description", content: "Bagikan koleksi Anda atau nominasikan referensi untuk atlas." },
     ],
   }),
   component: ContactPage,
@@ -23,13 +23,13 @@ function ContactPage() {
       <section className="bg-gradient-hero pb-24 pt-44">
         <div className="mx-auto max-w-4xl px-4 text-center md:px-8">
           <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--gold-soft)]">
-            Editorial Desk
+            Meja Editorial
           </span>
           <h1 className="mt-6 font-display text-5xl leading-[1.02] text-bone md:text-7xl">
-            Write to <em className="text-gradient-gold not-italic">us</em>.
+            Tulislah kepada <em className="text-gradient-gold not-italic">kami</em>.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base text-bone/75 md:text-lg">
-            Suggest a reference, ask after a maison, or simply share what's on your wrist today.
+            Usulkan sebuah referensi, tanyakan tentang sebuah atelier, atau ceritakan apa yang ada di pergelangan Anda hari ini.
           </p>
         </div>
       </section>
@@ -38,14 +38,14 @@ function ContactPage() {
         <div className="mx-auto grid max-w-6xl gap-16 px-4 md:px-8 lg:grid-cols-5">
           <aside className="space-y-10 lg:col-span-2">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">Maison</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">Atelier</span>
               <p className="mt-3 flex items-start gap-3 text-sm text-foreground">
                 <MapPin size={16} className="mt-0.5 text-[var(--cognac)]" />
-                Rue du Rhône 14<br />Geneva, Switzerland
+                Rue du Rhône 14<br />Geneva, Swiss
               </p>
             </div>
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">Correspondence</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--cocoa)]">Korespondensi</span>
               <p className="mt-3 flex items-center gap-3 text-sm text-foreground">
                 <Mail size={16} className="text-[var(--cognac)]" />
                 desk@tempusaurum.atelier
@@ -53,8 +53,7 @@ function ContactPage() {
             </div>
             <div className="hairline" />
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Replies within five working days. We answer everything personally — there are no
-              automated responses here.
+              Balasan dalam lima hari kerja. Kami menjawab semuanya secara pribadi — tidak ada balasan otomatis di sini.
             </p>
           </aside>
 
@@ -67,13 +66,13 @@ function ContactPage() {
             }}
             className="space-y-6 rounded-3xl border border-[var(--border)] bg-card p-8 shadow-soft md:p-10 lg:col-span-3"
           >
-            <Field label="Your name">
+            <Field label="Nama Anda">
               <input
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="input-luxe"
-                placeholder="Madame, Monsieur…"
+                placeholder="Nyonya, Tuan…"
               />
             </Field>
             <Field label="Email">
@@ -83,17 +82,17 @@ function ContactPage() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="input-luxe"
-                placeholder="you@maison.com"
+                placeholder="anda@atelier.com"
               />
             </Field>
-            <Field label="Message">
+            <Field label="Pesan">
               <textarea
                 required
                 rows={5}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 className="input-luxe resize-none"
-                placeholder="Tell us about the reference on your mind…"
+                placeholder="Ceritakan tentang referensi yang ada di pikiran Anda…"
               />
             </Field>
 
@@ -101,12 +100,12 @@ function ContactPage() {
               type="submit"
               className="group inline-flex items-center gap-3 rounded-full bg-espresso px-7 py-4 text-xs font-semibold uppercase tracking-[0.28em] text-bone transition-colors hover:bg-cocoa"
             >
-              {sent ? "Message Sent ✓" : "Send Message"}
+              {sent ? "Pesan Terkirim ✓" : "Kirim Pesan"}
               <Send size={14} className="transition-transform group-hover:translate-x-1" />
             </button>
 
             {sent && (
-              <p className="text-sm text-[var(--cognac)]">Thank you — the desk will reply shortly.</p>
+              <p className="text-sm text-[var(--cognac)]">Terima kasih — meja kami akan segera membalas.</p>
             )}
           </form>
         </div>

@@ -1,17 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Search, User, Menu, X } from "lucide-react";
+import { Heart, Search, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/brands", label: "Brands" },
-  { to: "/collections", label: "Collections" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Beranda" },
+  { to: "/brands", label: "Brand" },
+  { to: "/collections", label: "Koleksi" },
+  { to: "/about", label: "Tentang" },
+  { to: "/contact", label: "Kontak" },
 ] as const;
 
 export function Navbar() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -23,6 +24,12 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearchOpen(false);
+    navigate({ to: "/collections", search: { q: query } });
+  };
 
   return (
     <header
@@ -58,7 +65,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setSearchOpen((v) => !v)}
-            aria-label="Search"
+            aria-label="Cari"
             className={`grid h-10 w-10 place-items-center rounded-full transition-colors ${
               scrolled
                 ? "text-espresso hover:bg-[var(--muted)]"
@@ -67,24 +74,15 @@ export function Navbar() {
           >
             <Search size={18} />
           </button>
-          <button
-            type="button"
+          <Link
+            to="/collections"
             aria-label="Wishlist"
             className={`hidden h-10 w-10 place-items-center rounded-full transition-colors sm:grid ${
               scrolled ? "text-espresso hover:bg-[var(--muted)]" : "text-bone hover:bg-white/10"
             }`}
           >
             <Heart size={18} />
-          </button>
-          <button
-            type="button"
-            aria-label="Account"
-            className={`hidden h-10 w-10 place-items-center rounded-full transition-colors sm:grid ${
-              scrolled ? "text-espresso hover:bg-[var(--muted)]" : "text-bone hover:bg-white/10"
-            }`}
-          >
-            <User size={18} />
-          </button>
+          </Link>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -100,24 +98,25 @@ export function Navbar() {
 
       {/* Search drawer */}
       {searchOpen && (
-        <div className="mx-auto mt-3 max-w-7xl px-4 md:px-8">
+        <form onSubmit={submitSearch} className="mx-auto mt-3 max-w-7xl px-4 md:px-8">
           <div className="glass flex items-center gap-3 rounded-full border border-[var(--border)] px-5 py-3 shadow-soft">
             <Search size={16} className="text-muted-foreground" />
             <input
               autoFocus
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by brand, reference or collection…"
+              placeholder="Cari berdasarkan brand, referensi atau koleksi…"
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             />
             <button
+              type="button"
               onClick={() => setSearchOpen(false)}
               className="text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
             >
-              Close
+              Tutup
             </button>
           </div>
-        </div>
+        </form>
       )}
 
       {/* Mobile drawer */}
