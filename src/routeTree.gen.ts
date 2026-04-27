@@ -9,38 +9,129 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CollectionsRouteImport } from './routes/collections'
+import { Route as BrandsRouteImport } from './routes/brands'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WatchIdRouteImport } from './routes/watch.$id'
 
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsRoute = CollectionsRouteImport.update({
+  id: '/collections',
+  path: '/collections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsRoute = BrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WatchIdRoute = WatchIdRouteImport.update({
+  id: '/watch/$id',
+  path: '/watch/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/collections': typeof CollectionsRoute
+  '/contact': typeof ContactRoute
+  '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/collections': typeof CollectionsRoute
+  '/contact': typeof ContactRoute
+  '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/collections': typeof CollectionsRoute
+  '/contact': typeof ContactRoute
+  '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/collections'
+    | '/contact'
+    | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/about' | '/brands' | '/collections' | '/contact' | '/watch/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/collections'
+    | '/contact'
+    | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BrandsRoute: typeof BrandsRoute
+  CollectionsRoute: typeof CollectionsRoute
+  ContactRoute: typeof ContactRoute
+  WatchIdRoute: typeof WatchIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections': {
+      id: '/collections'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof CollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands': {
+      id: '/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof BrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +139,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/watch/$id': {
+      id: '/watch/$id'
+      path: '/watch/$id'
+      fullPath: '/watch/$id'
+      preLoaderRoute: typeof WatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BrandsRoute: BrandsRoute,
+  CollectionsRoute: CollectionsRoute,
+  ContactRoute: ContactRoute,
+  WatchIdRoute: WatchIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
