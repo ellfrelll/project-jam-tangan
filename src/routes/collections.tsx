@@ -9,11 +9,13 @@ type BrandFilter = "Semua" | string;
 const collectionTabs: CollectionFilter[] = ["Semua", "Klasik", "Sport", "Modern"];
 
 export const Route = createFileRoute("/collections")({
-  validateSearch: (search: Record<string, unknown>): { brand: BrandFilter; collection: CollectionFilter; q?: string } => {
-    const brand = typeof search.brand === "string" ? search.brand : "Semua";
-    const collection = (collectionTabs.includes(search.collection as CollectionFilter)
-      ? search.collection
-      : "Semua") as CollectionFilter;
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { brand?: BrandFilter; collection?: CollectionFilter; q?: string } => {
+    const brand = typeof search.brand === "string" ? search.brand : undefined;
+    const collection = collectionTabs.includes(search.collection as CollectionFilter)
+      ? (search.collection as CollectionFilter)
+      : undefined;
     const q = typeof search.q === "string" && search.q ? search.q : undefined;
     return { brand, collection, q };
   },
@@ -29,7 +31,10 @@ export const Route = createFileRoute("/collections")({
 });
 
 function CollectionsPage() {
-  const { brand, collection, q } = Route.useSearch();
+  const search = Route.useSearch();
+  const brand: BrandFilter = search.brand ?? "Semua";
+  const collection: CollectionFilter = search.collection ?? "Semua";
+  const q = search.q;
   const navigate = Route.useNavigate();
 
   const brandName = brand === "Semua" ? null : brands.find((b) => b.slug === brand)?.name ?? null;
