@@ -233,7 +233,8 @@ function Home() {
           />
           <div className="mt-16 grid gap-6 md:grid-cols-3">
             {(["Klasik", "Sport", "Modern"] as const).map((c, i) => {
-              const sample = watches.find((w) => w.collection === c)!;
+              const sample = watches.find((w) => w.collection === c);
+              if (!sample) return null;
               return (
                 <Link
                   key={c}
