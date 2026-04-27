@@ -37,7 +37,8 @@ function BrandsPage() {
       <section className="bg-background py-24">
         <div className="mx-auto max-w-7xl space-y-24 px-4 md:px-8">
           {brands.map((b, i) => {
-            const sample = watches.find((w) => w.brand === b.name)!;
+            const sample = watches.find((w) => w.brand === b.name);
+            if (!sample) return null;
             return <BrandRow key={b.slug} brand={b} sample={sample} reverse={i % 2 === 1} index={i + 1} />;
           })}
         </div>
