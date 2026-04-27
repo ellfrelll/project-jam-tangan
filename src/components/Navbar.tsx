@@ -144,6 +144,22 @@ export function Navbar() {
                   {l.label}
                 </Link>
               ))}
+              <Link
+                to="/wishlist"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-[var(--muted)]"
+                activeProps={{ className: "!text-[var(--gold)]" }}
+              >
+                <span className="inline-flex items-center gap-2">
+                  <Heart size={14} fill={wishlistCount > 0 ? "currentColor" : "none"} />
+                  Wishlist
+                </span>
+                {wishlistCount > 0 && (
+                  <span className="rounded-full bg-[var(--cognac)] px-2 py-0.5 text-[10px] font-semibold text-bone">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
             </nav>
           </div>
         </div>
