@@ -79,8 +79,8 @@ function CollectionsPage() {
                     onClick={() => setCollection(t)}
                     className={`rounded-full border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.24em] transition-all ${
                       collection === t
-                        ? "border-espresso bg-espresso text-bone"
-                        : "border-[var(--border)] bg-transparent text-foreground hover:border-[var(--cocoa)]"
+                        ? "border-espresso bg-espresso text-bone shadow-soft"
+                        : "border-[var(--border)] bg-transparent text-foreground hover:border-[var(--cocoa)] hover:bg-bone/40"
                     }`}
                   >
                     {t}
@@ -134,13 +134,43 @@ function CollectionsPage() {
                 </Link>
               </div>
             )}
+
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-5">
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--cocoa)]">
+                Menampilkan{" "}
+                <span className="font-display text-base normal-case tracking-normal text-foreground">
+                  {filtered.length}
+                </span>{" "}
+                referensi
+                {collection !== "Semua" && (
+                  <> · karakter <span className="text-foreground">{collection}</span></>
+                )}
+                {brandName && (
+                  <> · brand <span className="text-foreground">{brandName}</span></>
+                )}
+              </p>
+              {(collection !== "Semua" || brand !== "Semua" || q) && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate({ search: { brand: "Semua", collection: "Semua", q: undefined } })
+                  }
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--cocoa)]/40 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground transition-all hover:border-[var(--cognac)] hover:bg-bone/60"
+                >
+                  Atur ulang filter
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
       <section className="bg-background py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            key={`${collection}-${brand}-${q ?? ""}`}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {filtered.map((w, i) => (
               <WatchCard key={w.id} watch={w} index={i} />
             ))}
